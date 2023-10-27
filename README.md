@@ -4,6 +4,8 @@ Criei uma Inteligência Artificial que possui uma voz e você pode conversar com
 # Sugestão
 Pergunte a ela: "Quem é você"
 
+Ela pode abrir qualquer site que você quiser, apenas diga: "Abrir" e o nome do site
+
 Para realizar operações matemáticas comece sua frase com: "Quanto é"
 
 Para ela repetir o que você fala você tem que dizer: "Comece a me imitar"
