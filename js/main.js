@@ -95,7 +95,7 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                     }
 
                     case "oi": {
-                        speechText.innerHTML = "Olá, como posso te ajudar?";
+                        speechText.innerHTML = "Oi, como posso te ajudar?";
                         IAVoice(speechText.textContent);
                         break;
                     }
