@@ -2,9 +2,15 @@ const recordBtn = document.getElementById("recordBtn");
 const speechText = document.getElementById("speechText");
 
 let mimic = false;
+let voiceList = [];
+
+speechSynthesis.addEventListener("voiceschanged", () => {
+    voiceList = speechSynthesis.getVoices();
+});
 
 function IAVoice(textToSpeech) {
     let utterance = new SpeechSynthesisUtterance(textToSpeech);
+    utterance.voice = voiceList[1];
     speechSynthesis.speak(utterance);
 }
 
@@ -27,47 +33,51 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
         let textToVoice = "";
 
         if (!mimic) {
+            //Abrir sites
             if (txt.includes("abrir")) {
-                let a = txt.replace(/abrir/g, "").split(" ").join("");
-                let b = `https://${a}.com/`;
-                speechText.innerHTML = `Abrindo ${a}...`;
+                let getSiteName = txt.replace(/abrir/g, "").split(" ").join("");
+                let URL = `https://${getSiteName}.com/`;
+                speechText.innerHTML = `Abrindo ${getSiteName}...`;
                 IAVoice(speechText.textContent);
 
-                if (a.includes("whatsapp") || a.includes("telegram")) {
-                    b = `https://web.${a}.com/`;
+                if (getSiteName.includes("whatsapp") || getSiteName.includes("telegram")) {
+                    URL = `https://web.${getSiteName}.com/`;
                 }
 
                 setTimeout(() => {
-                    window.open(b);
+                    window.open(URL);
                     speechText.innerHTML = "";
                 }, 2500);
 
                 return;
-            } else if (txt.includes("quanto é")) {
-                let a = txt.replace(/quanto é/g, "");
-                let b = null;
+            }
 
-                if (a.includes("x")) {
-                    a = a.replace(/x/g, "*");
+            //Operações matemáticas
+            if (txt.includes("quanto é")) {
+                let getOperation = txt.replace(/quanto é/g, "");
+                let operation = null;
+
+                if (getOperation.includes("x")) {
+                    getOperation = getOperation.replace(/x/g, "*");
                 }
 
-                if (a.includes("elevado a")) {
-                    a = a.replace(/elevado a/g, "**");
+                if (getOperationincludes("elevado a")) {
+                    getOperation = getOperationreplace(/elevado a/g, "**");
                 }
 
-                if (a.includes("raiz quadrada")) {
-                    a = a
+                if (getOperationincludes("raiz quadrada")) {
+                    getOperation = getOperation
                         .replace(/a raiz quadrada de/g, "")
                         .split(" ")
                         .join("");
-                    b = Math.sqrt(a);
-                    speechText.innerHTML = `a raiz quadrada de ${a} é igual a ${b}`;
+                    operation = Math.sqrt(getOperation);
+                    speechText.innerHTML = `a raiz quadrada de ${getOperation} é igual a ${operation}`;
                     IAVoice(speechText.textContent);
                     return;
                 }
 
-                b = eval(a);
-                speechText.innerHTML = `${a} é igual a ${b}`;
+                operation = eval(getOperation);
+                speechText.innerHTML = `${getOperation} é igual a ${operation}`;
 
                 if (speechText.textContent.includes("**")) {
                     textToVoice = speechText.innerHTML.replace("**", "elevado a");
@@ -95,9 +105,39 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                 return;
             }
 
+            //Nome
+            if (txt.includes("eu sou")) {
+                let getName = "";
+                if (txt.includes("eu sou a")) {
+                    getName = txt
+                        .replace(/eu sou a/g, "")
+                        .split(" ")
+                        .join("");
+                } else if (txt.includes("eu sou o")) {
+                    getName = txt
+                        .replace(/eu sou o/g, "")
+                        .split(" ")
+                        .join("");
+                } else {
+                    getName = txt
+                        .replace(/eu sou/g, "")
+                        .split(" ")
+                        .join("");
+                }
+                speechText.innerHTML = `Olá, ${getName}, tudo bem? Como eu posso te ajudar?`;
+                IAVoice(speechText.textContent);
+                return;
+            }
+
             switch (txt) {
                 case "quem é você": {
-                    speechText.innerHTML = "Eu sou uma IA de reconhecimento de voz feito pelo Alyfer";
+                    speechText.innerHTML = "Eu sou uma Inteligência Artificial de reconhecimento de voz feito pelo Alyfer. Você pode conversar comigo";
+                    IAVoice(speechText.textContent);
+                    break;
+                }
+
+                case "olá": {
+                    speechText.innerHTML = "Olá, como posso te ajudar?";
                     IAVoice(speechText.textContent);
                     break;
                 }
@@ -115,7 +155,7 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                 }
 
                 default:
-                    speechText.innerHTML = "Desculpá, não consegui entender :/";
+                    speechText.innerHTML = "Desculpa, não consegui entender";
                     IAVoice(speechText.textContent);
                     break;
             }
