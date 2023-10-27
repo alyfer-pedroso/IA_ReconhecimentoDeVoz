@@ -76,7 +76,7 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                     return;
                 }
 
-                operation = eval(getOperation);
+                operation = eval(getOperation).toFixed(2);
                 speechText.innerHTML = `${getOperation} é igual a ${operation}`;
 
                 if (speechText.textContent.includes("**")) {
