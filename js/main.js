@@ -129,6 +129,7 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                 return;
             }
 
+            //Frases preparadas
             switch (txt) {
                 case "quem é você": {
                     speechText.innerHTML = "Eu sou uma Inteligência Artificial de reconhecimento de voz feito pelo Alyfer. Você pode conversar comigo";
@@ -149,8 +150,9 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                     break;
                 }
 
-                case null: {
-                    speechText.innerHTML = "...";
+                case "qual é o seu nome": {
+                    speechText.innerHTML = "Não sei qual é o meu nome. O Alyfer não pensou nisso ainda";
+                    IAVoice(speechText.textContent);
                     break;
                 }
 
