@@ -64,11 +64,15 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                 if ((txt.includes("me") && txt.includes("imite")) || (txt.includes("me") && txt.includes("imitar"))) {
                     mimicUser(txt);
                     return;
+                } else if (txt.includes("imite") || txt.includes("imitar")) {
+                    speechText.innerHTML = "Desculpa, imitar quem?";
+                    IAVoice(speechText.textContent);
+                    return;
                 }
 
                 //Ajuda
                 if (txt.includes("me ajuda") || txt.includes("o que você pode fazer") || txt.includes("o que você faz")) {
-                    speechText.innerHTML = "Eu consigo te ajudar! Por enquanto eu posso abrir sites, fazer contas matemáticas, saber o seu nome e pesquisar coisas para você";
+                    speechText.innerHTML = "Eu consigo te ajudar! Por enquanto eu posso abrir sites (Marina, abrir), fazer contas matemáticas (Marina, quanto é), saber o seu nome e pesquisar coisas para você (Marina, pesquisar). Ah e também posso te imitar";
                     IAVoice(speechText.textContent);
                     return;
                 }
