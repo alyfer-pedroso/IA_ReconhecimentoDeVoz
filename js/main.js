@@ -71,7 +71,7 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                         .split(" ")
                         .join("");
                     operation = Math.sqrt(getOperation);
-                    speechText.innerHTML = `a raiz quadrada de ${getOperation} é igual a ${operation}`;
+                    speechText.innerHTML = `A raiz quadrada de ${getOperation} é igual a ${operation}`;
                     IAVoice(speechText.textContent);
                     return;
                 }
