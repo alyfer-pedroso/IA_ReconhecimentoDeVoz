@@ -1,5 +1,5 @@
 # IA_ReconhecimentoDeVoz
-Criei uma IA para você poder conversar
+Criei uma Inteligência Artificial que possue uma voz e você pode conversar com ela!
 
 Para realizar operações matemáticas comece sua frase com: "Quanto é"
 
