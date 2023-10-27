@@ -61,11 +61,11 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
                     getOperation = getOperation.replace(/x/g, "*");
                 }
 
-                if (getOperationincludes("elevado a")) {
+                if (getOperation.includes("elevado a")) {
                     getOperation = getOperationreplace(/elevado a/g, "**");
                 }
 
-                if (getOperationincludes("raiz quadrada")) {
+                if (getOperation.includes("raiz quadrada")) {
                     getOperation = getOperation
                         .replace(/a raiz quadrada de/g, "")
                         .split(" ")
