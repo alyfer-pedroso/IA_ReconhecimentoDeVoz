@@ -4,7 +4,7 @@ Criei uma Inteligência Artificial que possui uma voz e você pode conversar com
 # Sugestão
 Pergunte a ela: "Quem é você"
 
-Ela pode abrir qualquer site que você quiser, apena diga: "Abrir" e o nome do site
+Ela pode abrir qualquer site que você quiser, apenas diga: "Abrir" e o nome do site
 
 Para realizar operações matemáticas comece sua frase com: "Quanto é"
 
