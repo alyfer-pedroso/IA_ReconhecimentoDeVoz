@@ -106,24 +106,12 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
             }
 
             //Nome
-            if (txt.includes("eu sou")) {
-                let getName = "";
-                if (txt.includes("eu sou a")) {
-                    getName = txt
-                        .replace(/eu sou a/g, "")
+            if (txt.includes("meu nome é")) {
+                let getName = txt
+                        .replace(/meu nome é/g, "")
                         .split(" ")
                         .join("");
-                } else if (txt.includes("eu sou o")) {
-                    getName = txt
-                        .replace(/eu sou o/g, "")
-                        .split(" ")
-                        .join("");
-                } else {
-                    getName = txt
-                        .replace(/eu sou/g, "")
-                        .split(" ")
-                        .join("");
-                }
+                
                 speechText.innerHTML = `Olá, ${getName}, tudo bem? Como eu posso te ajudar?`;
                 IAVoice(speechText.textContent);
                 return;
