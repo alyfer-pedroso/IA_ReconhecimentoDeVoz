@@ -29,147 +29,87 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
     });
 
     Speech.addEventListener("result", (e) => {
-        const txt = e.results[0][0].transcript.toLowerCase();
+        let txt = e.results[0][0].transcript.toLowerCase();
         let textToVoice = "";
 
         if (!mimic) {
-            //Abrir sites
-            if (txt.includes("abrir")) {
-                let getSiteName = txt.replace(/abrir/g, "").split(" ").join("");
-                let URL = `https://${getSiteName}.com/`;
-                speechText.innerHTML = `Abrindo ${getSiteName}...`;
+            if (txt.includes("marina")) {
+                txt = txt.replace(/marina/g, "");
+
+                //Abrir sites
+                if (txt.includes("abrir")) {
+                    openSite(txt);
+                    return;
+                }
+
+                //Operações matemáticas
+                if (txt.includes("quanto é")) {
+                    doOperations(txt);
+                    return;
+                }
+
+                //Nome
+                if (txt.includes("eu sou") || txt.includes("meu nome é")) {
+                    userName(txt);
+                    return;
+                }
+
+                //Pesquisar
+                if (txt.includes("pesquisar")) {
+                    searchThings(txt);
+                    return;
+                }
+
+                //Imitar
+                if ((txt.includes("me") && txt.includes("imite")) || (txt.includes("me") && txt.includes("imitar"))) {
+                    mimicUser(txt);
+                    return;
+                }
+
+                //Ajuda
+                if (txt.includes("me ajuda") || txt.includes("o que você pode fazer") || txt.includes("o que você faz")) {
+                    speechText.innerHTML = "Eu consigo te ajudar! Por enquanto eu posso abrir sites, fazer contas matemáticas, saber o seu nome e pesquisar coisas para você";
+                    IAVoice(speechText.textContent);
+                    return;
+                }
+
+                speechText.innerHTML = "Desculpa, não consegui entender";
                 IAVoice(speechText.textContent);
+            } else {
+                //Frases preparadas
+                switch (txt) {
+                    case "quem é você": {
+                        speechText.innerHTML = "Eu sou uma Inteligência Artificial de reconhecimento de voz feito pelo Alyfer. Você pode conversar comigo e eu posso te ajudar";
+                        IAVoice(speechText.textContent);
+                        break;
+                    }
 
-                if (getSiteName.includes("whatsapp") || getSiteName.includes("telegram")) {
-                    URL = `https://web.${getSiteName}.com/`;
+                    case "olá": {
+                        speechText.innerHTML = "Olá, como posso te ajudar?";
+                        IAVoice(speechText.textContent);
+                        break;
+                    }
+
+                    case "oi": {
+                        speechText.innerHTML = "Olá, como posso te ajudar?";
+                        IAVoice(speechText.textContent);
+                        break;
+                    }
+
+                    case "qual é o seu nome": {
+                        speechText.innerHTML = "Olá! Meu nome é Marina e sou uma inteligência artificial de reconhecimento de voz. Você pode conversar comigo e eu posso te ajudar";
+                        IAVoice(speechText.textContent);
+                        break;
+                    }
+
+                    default:
+                        speechText.innerHTML = "Desculpa, não consegui entender";
+                        IAVoice(speechText.textContent);
+                        break;
                 }
-
-                setTimeout(() => {
-                    window.open(URL);
-                    speechText.innerHTML = "";
-                }, 2500);
-
-                return;
-            }
-
-            //Operações matemáticas
-            if (txt.includes("quanto é")) {
-                let getOperation = txt.replace(/quanto é/g, "");
-                let operation = null;
-
-                if (getOperation.includes("x")) {
-                    getOperation = getOperation.replace(/x/g, "*");
-                }
-
-                if (getOperation.includes("elevado a")) {
-                    getOperation = getOperationreplace(/elevado a/g, "**");
-                }
-
-                if (getOperation.includes("raiz quadrada")) {
-                    getOperation = getOperation
-                        .replace(/a raiz quadrada de/g, "")
-                        .split(" ")
-                        .join("");
-                    operation = Math.sqrt(getOperation);
-                    speechText.innerHTML = `A raiz quadrada de ${getOperation} é igual a ${operation}`;
-                    IAVoice(speechText.textContent);
-                    return;
-                }
-
-                operation = eval(getOperation).toFixed(2);
-                speechText.innerHTML = `${getOperation} é igual a ${operation}`;
-
-                if (speechText.textContent.includes("**")) {
-                    textToVoice = speechText.innerHTML.replace("**", "elevado a");
-                    IAVoice(textToVoice);
-                    return;
-                }
-                if (speechText.textContent.includes("*")) {
-                    textToVoice = speechText.innerHTML.replace("*", "vezes");
-                    IAVoice(textToVoice);
-                    return;
-                }
-                if (speechText.textContent.includes("/")) {
-                    textToVoice = speechText.innerHTML.replace("/", "dividido por");
-                    IAVoice(textToVoice);
-                    return;
-                }
-                if (speechText.textContent.includes("-")) {
-                    textToVoice = speechText.innerHTML.replace("-", "menos");
-                    IAVoice(textToVoice);
-                    return;
-                }
-
-                IAVoice(speechText.textContent);
-
-                return;
-            }
-
-            //Nome
-            if (txt.includes("eu sou")) {
-                let getName = "";
-                if (txt.includes("eu sou a")) {
-                    getName = txt
-                        .replace(/eu sou a/g, "")
-                        .split(" ")
-                        .join("");
-                } else if (txt.includes("eu sou o")) {
-                    getName = txt
-                        .replace(/eu sou o/g, "")
-                        .split(" ")
-                        .join("");
-                } else {
-                    getName = txt
-                        .replace(/eu sou/g, "")
-                        .split(" ")
-                        .join("");
-                }
-                speechText.innerHTML = `Olá, ${getName}, tudo bem? Como eu posso te ajudar?`;
-                IAVoice(speechText.textContent);
-                return;
-            }
-
-            //Frases preparadas
-            switch (txt) {
-                case "quem é você": {
-                    speechText.innerHTML = "Eu sou uma Inteligência Artificial de reconhecimento de voz feito pelo Alyfer. Você pode conversar comigo";
-                    IAVoice(speechText.textContent);
-                    break;
-                }
-
-                case "olá": {
-                    speechText.innerHTML = "Olá, como posso te ajudar?";
-                    IAVoice(speechText.textContent);
-                    break;
-                }
-
-                case "comece a me imitar": {
-                    mimic = true;
-                    speechText.innerHTML = "Ok, vou te imitar";
-                    IAVoice(speechText.textContent);
-                    break;
-                }
-
-                case "qual é o seu nome": {
-                    speechText.innerHTML = "Não sei qual é o meu nome. O Alyfer não pensou nisso ainda";
-                    IAVoice(speechText.textContent);
-                    break;
-                }
-
-                default:
-                    speechText.innerHTML = "Desculpa, não consegui entender";
-                    IAVoice(speechText.textContent);
-                    break;
             }
         } else {
-            if (txt.includes("pare") || txt.includes("imitar")) {
-                mimic = false;
-                speechText.innerHTML = "Ok, eu parei";
-                IAVoice(speechText.textContent);
-                return;
-            }
-            speechText.innerHTML = txt;
-            IAVoice(speechText.textContent);
+            mimicUser(txt);
         }
     });
 } else {
